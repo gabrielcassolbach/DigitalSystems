@@ -19,7 +19,7 @@ architecture gate_level of display_converter is
                 "0011001" when "0100",
                 "0010010" when "0101",
                 "0000010" when "0110",
-                "0000111" when "0111",
+                "1111000" when "0111",
                 "0000000" when "1000",
                 "0011000" when "1001",
                 "0001000" when "1010",
