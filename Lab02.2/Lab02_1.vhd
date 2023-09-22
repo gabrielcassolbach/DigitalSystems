@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 
 entity Lab02_1 is 
 	port (  key0: in std_logic;
-                fpga_clk: in std_logic;
+                key1: in std_logic;
                 sw_choice: in std_logic;
                 sw_keys: in std_logic_vector (3 downto 0);
                 hex0: out std_logic_vector (6 downto 0);
@@ -11,7 +11,13 @@ entity Lab02_1 is
                 hex2: out std_logic_vector (6 downto 0);
                 hex3: out std_logic_vector (6 downto 0);
                 hex4: out std_logic_vector (6 downto 0);
-                hex5: out std_logic_vector (6 downto 0)
+                hex5: out std_logic_vector (6 downto 0);
+                v01: out std_logic_vector (3 downto 0);
+                v02: out std_logic_vector (3 downto 0);
+                v03: out std_logic_vector (3 downto 0);
+                v04: out std_logic_vector (3 downto 0);
+                v05: out std_logic_vector (3 downto 0);
+                v06: out std_logic_vector (3 downto 0)
         );
 end Lab02_1;
 
@@ -28,12 +34,6 @@ signal registerOutput06: std_logic_vector (3 downto 0);
 signal mux01_output: std_logic_vector (3 downto 0);
 signal mux02_output: std_logic_vector (3 downto 0);
 signal adderSubtractorOutput: std_logic_vector (4 downto 0);
-
---component
-component clock_converter
-port (	clk: in std_logic; 
-        clk_2Hz: out std_logic);
-end component;
 
 --component 
 component fourBitsAdder is
@@ -64,14 +64,14 @@ port (	x: in std_logic_vector (3 downto 0);
 end component;
   
     begin
-        clk_converter: clock_converter port map (clk => fpga_clk, clk_2Hz => rightClk);
+        rightClk <= not key1;        
 
         register01: fourBitsRegister port map (rclk => rightClk, d => sw_keys, q => registerOutput01 );
         register02: fourBitsRegister port map (rclk => rightClk, d => registerOutput01, q => registerOutput02 );
         register03: fourBitsRegister port map (rclk => rightClk, d => registerOutput02, q => registerOutput03 );
         register04: fourBitsRegister port map (rclk => rightClk, d => registerOutput03, q => registerOutput04 );
-        register05: fourBitsRegister port map (rclk => rightClk and key0, d => mux01_output, q => registerOutput05 );
-        register06: fourBitsRegister port map (rclk => rightClk and key0, d => mux02_output, q => registerOutput06 );
+        register05: fourBitsRegister port map (rclk => key1 xor (not key0), d => mux01_output, q => registerOutput05 );
+        register06: fourBitsRegister port map (rclk => key1 xor (not key0), d => mux02_output, q => registerOutput06 );
 
         adder_subtractor: fourBitsAdder port map (a => registerOutput01, b => registerOutput02, c_in => sw_choice, s => adderSubtractorOutput);
         
@@ -84,4 +84,12 @@ end component;
         display04: display_converter port map (x => registerOutput04, seg => hex3);
         display05: display_converter port map (x => registerOutput05, seg => hex4);
         display06: display_converter port map (x => registerOutput06, seg => hex5);
+
+        v01 <= registerOutput01;
+        v02 <= registerOutput02;
+        v03 <= registerOutput03;
+        v04 <= registerOutput04;
+        v05 <= registerOutput05;
+        v06 <= registerOutput06;
+
     end struct;

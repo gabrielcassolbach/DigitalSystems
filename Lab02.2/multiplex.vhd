@@ -11,10 +11,6 @@ end multiplex;
 
 architecture struct of multiplex is 
 
---signal 
-signal controlSignalVector: std_logic_vector (3 downto 0);
-
 begin
-    controlSignalVector <= control_signal & control_signal & control_signal & control_signal;
-    c <= (a and controlSignalVector) or (b and not controlSignalVector); 
+    c <= a when control_signal = '0' else b; 
 end struct;
