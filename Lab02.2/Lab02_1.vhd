@@ -2,8 +2,8 @@ Library IEEE;
 use ieee.std_logic_1164.all;
 
 entity Lab02_1 is 
-	port (  key0: in std_logic;
-                key1: in std_logic;
+	port (  key0: in std_logic; --soma.
+                key1: in std_logic; --deslocamento.
                 sw_choice: in std_logic;
                 sw_keys: in std_logic_vector (3 downto 0);
                 hex0: out std_logic_vector (6 downto 0);
@@ -24,7 +24,6 @@ end Lab02_1;
 architecture struct of Lab02_1 is
 
 --signal
-signal rightClk: std_logic;
 signal registerOutput01: std_logic_vector (3 downto 0);
 signal registerOutput02: std_logic_vector (3 downto 0);
 signal registerOutput03: std_logic_vector (3 downto 0);
@@ -34,6 +33,8 @@ signal registerOutput06: std_logic_vector (3 downto 0);
 signal mux01_output: std_logic_vector (3 downto 0);
 signal mux02_output: std_logic_vector (3 downto 0);
 signal adderSubtractorOutput: std_logic_vector (4 downto 0);
+
+signal jk_control_out: std_logic := '0';
 
 --component 
 component fourBitsAdder is
@@ -62,16 +63,14 @@ component display_converter
 port (	x: in std_logic_vector (3 downto 0);
 	seg: out std_logic_vector (6 downto 0));
 end component;
-  
-    begin
-        rightClk <= not key1;        
 
-        register01: fourBitsRegister port map (rclk => rightClk, d => sw_keys, q => registerOutput01 );
-        register02: fourBitsRegister port map (rclk => rightClk, d => registerOutput01, q => registerOutput02 );
-        register03: fourBitsRegister port map (rclk => rightClk, d => registerOutput02, q => registerOutput03 );
-        register04: fourBitsRegister port map (rclk => rightClk, d => registerOutput03, q => registerOutput04 );
-        register05: fourBitsRegister port map (rclk => key1 xor (not key0), d => mux01_output, q => registerOutput05 );
-        register06: fourBitsRegister port map (rclk => key1 xor (not key0), d => mux02_output, q => registerOutput06 );
+    begin
+        register01: fourBitsRegister port map (rclk => key1, d => sw_keys, q => registerOutput01 );
+        register02: fourBitsRegister port map (rclk => key1, d => registerOutput01, q => registerOutput02 );
+        register03: fourBitsRegister port map (rclk => key1, d => registerOutput02, q => registerOutput03 );
+        register04: fourBitsRegister port map (rclk => key1, d => registerOutput03, q => registerOutput04 );
+        register05: fourBitsRegister port map (rclk => key1 xor key0, d => mux01_output, q => registerOutput05 );
+        register06: fourBitsRegister port map (rclk => key1 xor key0, d => mux02_output, q => registerOutput06 );
 
         adder_subtractor: fourBitsAdder port map (a => registerOutput01, b => registerOutput02, c_in => sw_choice, s => adderSubtractorOutput);
         

@@ -13,7 +13,7 @@ architecture arch of fourBitsRegister is
     begin
         process(rclk)
         begin
-            if(rclk'event and rclk = '0') then 
+            if rising_edge(rclk) then 
                 q <= d;
             end if;
         end process;

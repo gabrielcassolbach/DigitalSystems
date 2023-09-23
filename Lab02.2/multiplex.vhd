@@ -12,5 +12,5 @@ end multiplex;
 architecture struct of multiplex is 
 
 begin
-    c <= a when control_signal = '0' else b; 
+    c <= b when control_signal = '1' else a;
 end struct;
