@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 
 entity jk_ff is
    port ( 
-		j, k, clk, reset, preset, clk: in std_logic;
+		j, k, clk, reset, preset: in std_logic;
 		q, qb: out std_logic
 	);
 end jk_ff;
