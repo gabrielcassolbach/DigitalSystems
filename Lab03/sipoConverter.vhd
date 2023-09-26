@@ -1,1 +1,1 @@
--- Projete e implemente um conversor PISO (Parallel-in, Serial-out) de 8 bits.
+-- Projete e implemente um conversor PISO (Serial-in, Parallel-out) de 8 bits.

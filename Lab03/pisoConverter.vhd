@@ -45,7 +45,7 @@ end component;
 
     begin 
     -- flip-flops.
-    flip_flop1: jk_ff port map (j => sw_keys(0), k => not sw_keys(0), clk => key1, reset => '0', preset => '0', q => ff_output01);
+    flip_flop1: jk_ff port map (j => sw_keys(0)  , k => not sw_keys(0), clk => key1, reset => '0', preset => '0', q => ff_output01);
     flip_flop2: jk_ff port map (j => mux01_output, k => not mux01_output, clk => key1, reset => '0', preset => '0', q => ff_output02);
     flip_flop3: jk_ff port map (j => mux02_output, k => not mux02_output, clk => key1, reset => '0', preset => '0', q => ff_output03);
     flip_flop4: jk_ff port map (j => mux03_output, k => not mux03_output, clk => key1, reset => '0', preset => '0', q => ff_output04);
