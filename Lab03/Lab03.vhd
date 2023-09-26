@@ -43,5 +43,5 @@ end component;
         piso: pisoConverter port map (sw_keys => sw, key0 => pb0, key1 => pb1, s_out => serial_out);
         displaysPiso: eightBitsRegister port map (rclk => pb0, d => sw, q => registeredPiso);
         display00: display_converter port map (x => registeredPiso (3 downto 0), seg => hex0);
-        display01: display_converter port map (x => registeredPiso (7 downto 4), seg => hex0);
+        display01: display_converter port map (x => registeredPiso (7 downto 4), seg => hex1);
     end struct;
