@@ -11,13 +11,7 @@ entity Lab02_1 is
                 hex2: out std_logic_vector (6 downto 0);
                 hex3: out std_logic_vector (6 downto 0);
                 hex4: out std_logic_vector (6 downto 0);
-                hex5: out std_logic_vector (6 downto 0);
-                v01: out std_logic_vector (3 downto 0);
-                v02: out std_logic_vector (3 downto 0);
-                v03: out std_logic_vector (3 downto 0);
-                v04: out std_logic_vector (3 downto 0);
-                v05: out std_logic_vector (3 downto 0);
-                v06: out std_logic_vector (3 downto 0)
+                hex5: out std_logic_vector (6 downto 0)
         );
 end Lab02_1;
 
@@ -85,12 +79,4 @@ end component;
         display04: display_converter port map (x => registerOutput04, seg => hex3);
         display05: display_converter port map (x => registerOutput05, seg => hex4);
         display06: display_converter port map (x => registerOutput06, seg => hex5);
-
-        v01 <= registerOutput01;
-        v02 <= registerOutput02;
-        v03 <= registerOutput03;
-        v04 <= registerOutput04;
-        v05 <= registerOutput05;
-        v06 <= registerOutput06;
-
     end struct;
