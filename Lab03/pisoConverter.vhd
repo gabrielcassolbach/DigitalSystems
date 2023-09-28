@@ -4,8 +4,7 @@ use ieee.std_logic_1164.all;
 entity pisoConverter is
     port (
         sw_keys: in std_logic_vector (7 downto 0);
-        key0: in std_logic;
-        key1: in std_logic;
+        key0, key1: in std_logic;
         s_out: out std_logic
     );
 end pisoConverter;
@@ -13,22 +12,8 @@ end pisoConverter;
 architecture gate_level of pisoConverter is
 
 --signals
-signal ff_output01: std_logic := '0';
-signal ff_output02: std_logic := '0';
-signal ff_output03: std_logic := '0';
-signal ff_output04: std_logic := '0';
-signal ff_output05: std_logic := '0';
-signal ff_output06: std_logic := '0';
-signal ff_output07: std_logic := '0';
-signal ff_output08: std_logic := '0';
-
-signal mux01_output: std_logic;
-signal mux02_output: std_logic;
-signal mux03_output: std_logic;
-signal mux04_output: std_logic;
-signal mux05_output: std_logic;
-signal mux06_output: std_logic;
-signal mux07_output: std_logic;
+signal muxOut: std_logic_vector (7 downto 0);
+signal ffsOut: std_logic_vector (7 downto 0);
 
 --component
 component multiplex is 
@@ -45,26 +30,27 @@ end component;
 
     begin 
     -- flip-flops.
-    flip_flop1: jk_ff port map (j => sw_keys(0)  , k => not sw_keys(0), clk => key1, reset => '0', preset => '0', q => ff_output01);
-    flip_flop2: jk_ff port map (j => mux01_output, k => not mux01_output, clk => key1, reset => '0', preset => '0', q => ff_output02);
-    flip_flop3: jk_ff port map (j => mux02_output, k => not mux02_output, clk => key1, reset => '0', preset => '0', q => ff_output03);
-    flip_flop4: jk_ff port map (j => mux03_output, k => not mux03_output, clk => key1, reset => '0', preset => '0', q => ff_output04);
-    flip_flop5: jk_ff port map (j => mux04_output, k => not mux04_output, clk => key1, reset => '0', preset => '0', q => ff_output05);
-    flip_flop6: jk_ff port map (j => mux05_output, k => not mux05_output, clk => key1, reset => '0', preset => '0', q => ff_output06);
-    flip_flop7: jk_ff port map (j => mux06_output, k => not mux06_output, clk => key1, reset => '0', preset => '0', q => ff_output07);
-    flip_flop8: jk_ff port map (j => mux07_output, k => not mux07_output, clk => key1, reset => '0', preset => '0', q => ff_output08);
+    flip_flop1: jk_ff port map (j => muxOut(0), k => not muxOut(0), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(0));
+    flip_flop2: jk_ff port map (j => muxOut(1), k => not muxOut(1), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(1));
+    flip_flop3: jk_ff port map (j => muxOut(2), k => not muxOut(2), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(2));
+    flip_flop4: jk_ff port map (j => muxOut(3), k => not muxOut(3), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(3));
+    flip_flop5: jk_ff port map (j => muxOut(4), k => not muxOut(4), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(4));
+    flip_flop6: jk_ff port map (j => muxOut(5), k => not muxOut(5), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(5));
+    flip_flop7: jk_ff port map (j => muxOut(6), k => not muxOut(6), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(6));
+    flip_flop8: jk_ff port map (j => muxOut(7), k => not muxOut(7), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(7));
 
     -- multiplexors.
-    mux01: multiplex port map (control_signal => key0, a => sw_keys(1), b => ff_output01, c => mux01_output);
-    mux02: multiplex port map (control_signal => key0, a => sw_keys(2), b => ff_output02, c => mux02_output);
-    mux03: multiplex port map (control_signal => key0, a => sw_keys(3), b => ff_output03, c => mux03_output);
-    mux04: multiplex port map (control_signal => key0, a => sw_keys(4), b => ff_output04, c => mux04_output);
-    mux05: multiplex port map (control_signal => key0, a => sw_keys(5), b => ff_output05, c => mux05_output);
-    mux06: multiplex port map (control_signal => key0, a => sw_keys(6), b => ff_output06, c => mux06_output);
-    mux07: multiplex port map (control_signal => key0, a => sw_keys(7), b => ff_output07, c => mux07_output);
-
+    mux01: multiplex port map (control_signal => key0, a => sw_keys(0), b => '0', c => muxOut(0));
+    mux02: multiplex port map (control_signal => key0, a => sw_keys(1), b => ffsOut(0), c => muxOut(1));
+    mux03: multiplex port map (control_signal => key0, a => sw_keys(2), b => ffsOut(1), c => muxOut(2));
+    mux04: multiplex port map (control_signal => key0, a => sw_keys(3), b => ffsOut(2), c => muxOut(3));
+    mux05: multiplex port map (control_signal => key0, a => sw_keys(4), b => ffsOut(3), c => muxOut(4));
+    mux06: multiplex port map (control_signal => key0, a => sw_keys(5), b => ffsOut(4), c => muxOut(5));
+    mux07: multiplex port map (control_signal => key0, a => sw_keys(6), b => ffsOut(5), c => muxOut(6));
+    mux08: multiplex port map (control_signal => key0, a => sw_keys(7), b => ffsOut(6), c => muxOut(7));
+    
     --output.
-    s_out <= ff_output08;
-
+    s_out <= ffsOut(7);
+    
     end gate_level;
 
