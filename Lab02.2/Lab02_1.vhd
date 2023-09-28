@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity Lab02_1 is 
 	port (  key0: in std_logic; --soma.
                 key1: in std_logic; --deslocamento.
-                sw_choice: in std_logic;
+                sw_choice: in std_logic; -- sw_choice = 0 -> soma e sw_choice = 1 -> subtração.
                 sw_keys: in std_logic_vector (3 downto 0);
                 hex0: out std_logic_vector (6 downto 0);
                 hex1: out std_logic_vector (6 downto 0);
@@ -30,6 +30,7 @@ signal registerOutput03: std_logic_vector (3 downto 0);
 signal registerOutput04: std_logic_vector (3 downto 0);
 signal registerOutput05: std_logic_vector (3 downto 0);
 signal registerOutput06: std_logic_vector (3 downto 0);
+signal swChoiceV:  std_logic_vector (3 downto 0);
 signal mux01_output: std_logic_vector (3 downto 0);
 signal mux02_output: std_logic_vector (3 downto 0);
 signal adderSubtractorOutput: std_logic_vector (4 downto 0);
@@ -72,7 +73,8 @@ end component;
         register05: fourBitsRegister port map (rclk => key1 xor key0, d => mux01_output, q => registerOutput05 );
         register06: fourBitsRegister port map (rclk => key1 xor key0, d => mux02_output, q => registerOutput06 );
 
-        adder_subtractor: fourBitsAdder port map (a => registerOutput01, b => registerOutput02, c_in => sw_choice, s => adderSubtractorOutput);
+        swChoiceV <= sw_choice & sw_choice & sw_choice & sw_choice;
+        adder_subtractor: fourBitsAdder port map (a => registerOutput01, b => registerOutput02 xor swChoiceV, c_in => sw_choice, s => adderSubtractorOutput);
         
         multiplexer: multiplex port map (control_signal => not key0, a => registerOutput04, b => adderSubtractorOutput (3 downto 0), c => mux01_output);
         multiplexer02: multiplex port map (control_signal => not key0, a => registerOutput05, b => '0' & '0' & '0' & (adderSubtractorOutput(4) and not sw_choice), c => mux02_output);
