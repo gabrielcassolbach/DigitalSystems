@@ -41,10 +41,8 @@ end component;
 
 --component
 component display_converter is
-	port (
-		x: in std_logic_vector (3 downto 0);
-		seg: out std_logic_vector (6 downto 0)
-	);
+port (  x: in std_logic_vector (3 downto 0);
+		seg: out std_logic_vector (6 downto 0));
 end component;
     
     begin 

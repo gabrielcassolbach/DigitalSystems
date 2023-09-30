@@ -5,7 +5,7 @@ use ieee.std_logic_1164.all;
 entity Lab04 is
     port (
        fpga_clk: in std_logic;
-       machineStateOutput: out std_logic_vector (3 downto 0)
+       hex0: out std_logic_vector (6 downto 0)
     );
 end Lab04;
 
@@ -25,17 +25,24 @@ end component;
 --component
 component clock_converter
 port (	clk: in std_logic; 
-		clk_2Hz: out std_logic);
+        slowClk: out std_logic);
+end component;
+
+--component
+component display_converter is
+port (  x: in std_logic_vector (3 downto 0);
+		seg: out std_logic_vector (6 downto 0));
 end component;
 
     begin    
-    --clk_converter: clock_converter port map (clk => fpga_clk, clk_2Hz => rightClk);
+    -- set clock to a low frequency
+    clk_converter: clock_converter port map (clk => fpga_clk, slowClk => rightClk);
 
     -- state-machine:
-    flip_flop1: jk_ff port map (j => j0, k => k0, clk => fpga_clk, reset => '0', preset => '0', q => x(0));
-    flip_flop2: jk_ff port map (j => j1, k => k1, clk => fpga_clk, reset => '0', preset => '0', q => x(1));
-    flip_flop3: jk_ff port map (j => j2, k => k2, clk => fpga_clk, reset => '0', preset => '0', q => x(2));
-    flip_flop4: jk_ff port map (j => j3, k => k3, clk => fpga_clk, reset => '0', preset => '0', q => x(3));
+    flip_flop1: jk_ff port map (j => j0, k => k0, clk => rightClk, reset => '0', preset => '0', q => x(0));
+    flip_flop2: jk_ff port map (j => j1, k => k1, clk => rightClk, reset => '0', preset => '0', q => x(1));
+    flip_flop3: jk_ff port map (j => j2, k => k2, clk => rightClk, reset => '0', preset => '0', q => x(2));
+    flip_flop4: jk_ff port map (j => j3, k => k3, clk => rightClk, reset => '0', preset => '0', q => x(3));
     
     --logical-relations:
     j3 <= (x(2) and x(1)) or ((not x(0)) and x(2)); 
@@ -48,5 +55,5 @@ end component;
     k0 <= ((not x(3)) and (not x(1))) or (x(3) and (not x(2)) and (not (x(1)))) or (x(3) and x(2) and x(1)); 
 
     --output:
-    machineStateOutput <= x;
+    display00: display_converter port map (x => x, seg => hex0);
     end struct;
