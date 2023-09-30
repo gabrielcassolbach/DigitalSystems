@@ -1,6 +1,7 @@
 Library IEEE;
 use ieee.std_logic_1164.all;
 
+-- pisoConverter working correctly.
 entity pisoConverter is
     port (
         sw_keys: in std_logic_vector (7 downto 0);
