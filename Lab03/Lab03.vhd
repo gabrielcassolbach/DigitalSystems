@@ -3,7 +3,8 @@ use ieee.std_logic_1164.all;
 
 entity Lab03_1 is
     port (
-        pb0, pb1: in std_logic;
+        pb0: in std_logic;
+        fpga_clk: in std_logic;
         sw: in std_logic_vector (7 downto 0);
         leds: out std_logic_vector (7 downto 0);
         hex0, hex1, hex4, hex5: out std_logic_vector (6 downto 0)
@@ -41,15 +42,22 @@ port (  rclk: in std_logic;
 end component;
 
 --component
-component display_converter is
-port (  x: in std_logic_vector (3 downto 0);
+component clock_converter
+port (	clk: in std_logic; 
+		clk_2Hz: out std_logic);
+end component;
+
+--component 
+component display_converter
+port (	x: in std_logic_vector (3 downto 0);
 		seg: out std_logic_vector (6 downto 0));
 end component;
     
     begin 
+    clk_converter: clock_converter port map (clk => fpga_clk, clk_2Hz => rightClk);
     ---------------------------------------------------------------------------------------------
-    piso: pisoConverter port map (sw_keys => sw, key0 => pb0, key1 => pb1, s_out => auxSerial);
-	sipo: sipoConverter port map (serial_in => auxSerial, key1 => pb1, q => auxLeds);
+    piso: pisoConverter port map (sw_keys => sw, key0 => pb0, key1 => rightClk, s_out => auxSerial);
+	sipo: sipoConverter port map (serial_in => auxSerial, key1 => rightClk, q => auxLeds);
     inputRegister: eightBitsRegister port map (rclk => pb0, d => sw, q => registeredPiso); 
     leds <= auxLeds;
     ---------------------------------------------------------------------------------------------

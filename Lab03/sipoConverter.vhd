@@ -23,13 +23,13 @@ end component;
     begin 
     --flip-flops:
     flip_flop1: jk_ff port map (j => serial_in, k => not serial_in, clk => key1, reset => '0', preset => '0', q => auxq(0));
-    flip_flop2: jk_ff port map (j => auxq(0) and key1, k => not (auxq(0) and key1), clk => key1, reset => '0', preset => '0', q => auxq(1));
-    flip_flop3: jk_ff port map (j => auxq(1) and key1, k => not (auxq(1) and key1), clk => key1, reset => '0', preset => '0', q => auxq(2));
-    flip_flop4: jk_ff port map (j => auxq(2) and key1, k => not (auxq(2) and key1), clk => key1, reset => '0', preset => '0', q => auxq(3));
-    flip_flop5: jk_ff port map (j => auxq(3) and key1, k => not (auxq(3) and key1), clk => key1, reset => '0', preset => '0', q => auxq(4));
-    flip_flop6: jk_ff port map (j => auxq(4) and key1, k => not (auxq(4) and key1), clk => key1, reset => '0', preset => '0', q => auxq(5));
-    flip_flop7: jk_ff port map (j => auxq(5) and key1, k => not (auxq(5) and key1), clk => key1, reset => '0', preset => '0', q => auxq(6));
-    flip_flop8: jk_ff port map (j => auxq(6) and key1, k => not (auxq(6) and key1), clk => key1, reset => '0', preset => '0', q => auxq(7));
+    flip_flop2: jk_ff port map (j => auxq(0), k => not auxq(0), clk => key1, reset => '0', preset => '0', q => auxq(1));
+    flip_flop3: jk_ff port map (j => auxq(1), k => not auxq(1), clk => key1, reset => '0', preset => '0', q => auxq(2));
+    flip_flop4: jk_ff port map (j => auxq(2), k => not auxq(2), clk => key1, reset => '0', preset => '0', q => auxq(3));
+    flip_flop5: jk_ff port map (j => auxq(3), k => not auxq(3), clk => key1, reset => '0', preset => '0', q => auxq(4));
+    flip_flop6: jk_ff port map (j => auxq(4), k => not auxq(4), clk => key1, reset => '0', preset => '0', q => auxq(5));
+    flip_flop7: jk_ff port map (j => auxq(5), k => not auxq(5), clk => key1, reset => '0', preset => '0', q => auxq(6));
+    flip_flop8: jk_ff port map (j => auxq(6), k => not auxq(6), clk => key1, reset => '0', preset => '0', q => auxq(7));
     --output:
     q <= auxq;
     end gate_level;
