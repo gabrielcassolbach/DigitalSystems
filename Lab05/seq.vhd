@@ -14,7 +14,7 @@ architecture struct of seq is
     begin
         process(d1, d2, d3, d4, d5, d6)
         begin 
-            if d6="0001" and d5="0010" and d4="1000" and d3="0000" and d2="0000" and d1="0000" then
+            if d6="0001" and d5="0010" and d4="1001" and d3="0000" and d2="0011" and d1="0100" then
                 outSignal <= '0';
             else 
                 outSignal <= '1';

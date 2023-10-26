@@ -4,6 +4,7 @@ use ieee.std_logic_1164.all;
 entity firstStateMachine is
     port (
        clk: in std_logic;
+       rst: in std_logic;
        outClk: out std_logic;
        outputDigits: out std_logic_vector (3 downto 0)
     );
@@ -21,9 +22,11 @@ signal rstSignal: std_logic;
 signal v: std_logic_vector (3 downto 0);
 
     begin 
-    process (clk)
+    process (clk, rst)
     begin
-        if (clk'event and clk = '1') then 
+        if (rst <= '0') then
+            state <= s0;
+        elsif (clk'event and clk = '1') then 
             case state is 
                 when s0 => 
                     state <= s1;
@@ -75,9 +78,11 @@ signal v: std_logic_vector (3 downto 0);
         end case;
     end process;
 
-    process (clk)
+    process (clk, rst)
     begin
-        if (clk'event and clk = '1') then 
+        if (rst <= '0') then
+            clkCtrler <= s0;
+        elsif (clk'event and clk = '1') then 
             case clkCtrler is 
                 when s0 => 
                     clkCtrler <= s1;
