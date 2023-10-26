@@ -1,18 +1,18 @@
 Library IEEE;
 use ieee.std_logic_1164.all;
 
-entity firstStateMachine is
+entity secondStateMachine is
     port (
        clk: in std_logic;
        outClk: out std_logic;
        outputDigits: out std_logic_vector (3 downto 0)
     );
-end firstStateMachine;
+end secondStateMachine;
 
-architecture struct of firstStateMachine is
+architecture struct of secondStateMachine is
 
 --types
-type state_type is (s0, s1, s2, s3, s4, s5, s6, s7, s8, s9);
+type state_type is (s0, s1, s2, s3, s4, s5);
 
 --signals
 signal state: state_type;
@@ -36,14 +36,6 @@ signal v: std_logic_vector (3 downto 0);
                 when s4 => 
                     state <= s5;
                 when s5 => 
-                    state <= s6;
-                when s6 => 
-                    state <= s7;
-                when s7 => 
-                    state <= s8;
-                when s8 => 
-                    state <= s9;
-                when s9 => 
                     state <= s0;
             end case;
         end if;
@@ -63,15 +55,7 @@ signal v: std_logic_vector (3 downto 0);
             when s4 =>
                 v <= "0100";        
             when s5 =>
-                v <= "0101"; 
-            when s6 =>
-                v <= "0110";  
-            when s7 =>
-                v <= "0111";  
-            when s8 => 
-                v <= "1000";  
-            when s9 => 
-                v <= "1001";              
+                v <= "0101";        
         end case;
     end process;
 
@@ -90,14 +74,6 @@ signal v: std_logic_vector (3 downto 0);
                 when s4 => 
                     clkCtrler <= s5;
                 when s5 => 
-                    clkCtrler <= s6;
-                when s6 => 
-                    clkCtrler <= s7;
-                when s7 => 
-                    clkCtrler <= s8;
-                when s8 => 
-                    clkCtrler <= s9;
-                when s9 => 
                     clkCtrler <= s0;
             end case;
         end if;
@@ -117,15 +93,7 @@ signal v: std_logic_vector (3 downto 0);
             when s4 =>
                 rstSignal <= '0';       
             when s5 =>
-                rstSignal <= '0';
-            when s6 =>
-                rstSignal <= '0'; 
-            when s7 =>
-                rstSignal <= '0';  
-            when s8 => 
-                rstSignal <= '0';
-            when s9 => 
-                rstSignal <= '0';             
+                rstSignal <= '0';           
         end case;
     end process;
 
