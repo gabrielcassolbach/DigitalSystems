@@ -9,7 +9,7 @@ entity Lab05 is
         pb0: in std_logic;
         pb1: in std_logic;
         startStop: out std_logic;
-		hex0, hex1, hex2, hex3, hex4, hex5: out std_logic_vector (6 downto 0)
+        hex0, hex1, hex2, hex3, hex4, hex5: out std_logic_vector (6 downto 0)
     );
 end Lab05;
 

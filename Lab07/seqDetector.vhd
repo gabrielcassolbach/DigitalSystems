@@ -32,7 +32,7 @@ signal outputDigits: std_logic_vector (2 downto 0);
                         end if;
                     when s1=>
                         if inputDigit = '1' then
-                            state <= s0;
+                            state <= s1;
                         else 
                             state <= s2;
                         end if;

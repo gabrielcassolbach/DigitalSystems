@@ -7,13 +7,12 @@ entity Lab07 is
         pb0: in std_logic;
         pb1: in std_logic;
         pisoin: in std_logic_vector(7 downto 0); -- piso input.
-        pisoOut: out std_logic;
+		pisoOut: out std_logic;
         digit1: out std_logic_vector(3 downto 0); -- first four bits of piso.
         digit2: out std_logic_vector(3 downto 0); -- last four bits of piso.
         digit3: out std_logic_vector(3 downto 0)  -- state of detector.
     );
 end Lab07;
-
 
 architecture struct of Lab07 is
 
@@ -54,6 +53,6 @@ end component;
     -- analyse the clock's from piso. -> key0 (load) & key1 (shift).
     piso: pisoConverter port map (sw_keys => invertedInput, key0 => pb0, key1 => pb1, s_out => pisoOutput);
     pisoOut <= pisoOutput;
-    detector: seqDetector port map (inputDigit => pisoOutput, clk => pb1, reset_n => '1', outDigits => digit3);
+	detector: seqDetector port map (inputDigit => pisoOutput, clk => pb1, reset_n => '1', outDigits => digit3);
     -------------------------------------------------------------------------------------------------------
     end struct;
