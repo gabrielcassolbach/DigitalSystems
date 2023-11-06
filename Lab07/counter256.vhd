@@ -26,9 +26,7 @@ port ( clk: in std_logic;
        outputDigits: out std_logic_vector (3 downto 0));
 end component;
 
-    begin 
-    --digit1: firstStateMachine port map (clk => initialClk, rst => rstCtrl, outputDigits => firstDigit, outClk => digit1to2Clk);   
+    begin    
     digit1: stateMachine port map (clk => clk, rst => '1', outputDigits => firstDigit, outClk => machine1to2ctrl);
     digit2: stateMachine port map (clk => machine1to2ctrl, rst => '1', outputDigits => secondDigit, outClk => machine2to1ctrl);
-
     end struct;

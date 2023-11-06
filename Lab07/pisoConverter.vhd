@@ -13,7 +13,6 @@ end pisoConverter;
 architecture gate_level of pisoConverter is
 
 --signals
-signal auxKey1: std_logic;
 signal muxOut: std_logic_vector (7 downto 0);
 signal ffsOut: std_logic_vector (7 downto 0);
 
@@ -31,17 +30,16 @@ port (	j, k, clk, reset, preset: in std_logic;
 end component;
 
     begin 
-    auxKey1 <= (not (not key1));
 
     -- flip-flops.
-    flip_flop1: jk_ff port map (j => muxOut(0), k => not muxOut(0), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(0));
-    flip_flop2: jk_ff port map (j => muxOut(1), k => not muxOut(1), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(1));
-    flip_flop3: jk_ff port map (j => muxOut(2), k => not muxOut(2), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(2));
-    flip_flop4: jk_ff port map (j => muxOut(3), k => not muxOut(3), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(3));
-    flip_flop5: jk_ff port map (j => muxOut(4), k => not muxOut(4), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(4));
-    flip_flop6: jk_ff port map (j => muxOut(5), k => not muxOut(5), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(5));
-    flip_flop7: jk_ff port map (j => muxOut(6), k => not muxOut(6), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(6));
-    flip_flop8: jk_ff port map (j => muxOut(7), k => not muxOut(7), clk => auxKey1 and key0, reset => '0', preset => '0', q => ffsOut(7));
+    flip_flop1: jk_ff port map (j => muxOut(0), k => not muxOut(0), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(0));
+    flip_flop2: jk_ff port map (j => muxOut(1), k => not muxOut(1), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(1));
+    flip_flop3: jk_ff port map (j => muxOut(2), k => not muxOut(2), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(2));
+    flip_flop4: jk_ff port map (j => muxOut(3), k => not muxOut(3), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(3));
+    flip_flop5: jk_ff port map (j => muxOut(4), k => not muxOut(4), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(4));
+    flip_flop6: jk_ff port map (j => muxOut(5), k => not muxOut(5), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(5));
+    flip_flop7: jk_ff port map (j => muxOut(6), k => not muxOut(6), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(6));
+    flip_flop8: jk_ff port map (j => muxOut(7), k => not muxOut(7), clk => key1 and key0, reset => '0', preset => '0', q => ffsOut(7));
 
     -- multiplexors.
     mux01: multiplex port map (control_signal => key0, a => sw_keys(0), b => '0', c => muxOut(0));
