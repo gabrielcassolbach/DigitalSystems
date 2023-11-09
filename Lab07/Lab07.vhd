@@ -6,6 +6,8 @@ entity Lab07 is
     port (
         fpgaClk: in std_logic;
         pisoin: in std_logic_vector(7 downto 0); -- piso input.
+        clk1: out std_logic;
+        clk2: out std_logic;
         pisOut: out std_logic;
         digit1: out std_logic_vector(3 downto 0); -- first four bits of piso.
         digit2: out std_logic_vector(3 downto 0); -- last four bits of piso.
@@ -63,6 +65,8 @@ end component;
     -----------------------------------------------------------------------------------------------------------------
     piso: pisoConverter port map (sw_keys => invertedInput, key0 => (not pisoClk), key1 => (not dSeqClk), s_out => pisoOutput);
     pisOut <= pisoOutput;
+    clk1 <= pisoClk;
+    clk2 <= dSeqClk;
 	detector: seqDetector port map (inputDigit => pisoOutput, clk => (not dSeqClk), reset_n => '1', outDigits => digit3);
     -----------------------------------------------------------------------------------------------------------------
     end struct;
