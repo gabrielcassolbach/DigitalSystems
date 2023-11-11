@@ -11,7 +11,6 @@ entity counter256 is
     );
 end counter256;
 
-
 architecture struct of counter256 is
 
 --signal

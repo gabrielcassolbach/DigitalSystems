@@ -20,7 +20,7 @@ signal outputDigits: std_logic_vector (2 downto 0);
     begin 
         process(clk, reset_n)
         begin 
-            if(reset_n <= '0') then 
+            if(reset_n = '0') then 
                 state <= s0;
             elsif (clk'event and clk = '1') then -- clock na descida.
                 case state is
