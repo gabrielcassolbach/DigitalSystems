@@ -58,6 +58,12 @@ port (  clk: in std_logic;
 end component;
 
 --component 
+component invertsInput is
+port ( q0: in std_logic_vector (7 downto 0);
+       q1: out std_logic_vector (7 downto 0));
+end component;
+
+--component 
 --component memox is 
 --port ( address: in std_logic_vector (7 downto 0);
 --       clock: in std_logic := '1';
@@ -66,17 +72,10 @@ end component;
 
     begin 
     -----------------------------------------------------------------------------------------------------------------
-    invertedInput(0) <= pisoin(7);
-    invertedInput(1) <= pisoin(6);
-    invertedInput(2) <= pisoin(5);
-    invertedInput(3) <= pisoin(4);
-    invertedInput(4) <= pisoin(3);
-    invertedInput(5) <= pisoin(2);
-    invertedInput(6) <= pisoin(1);
-    invertedInput(7) <= pisoin(0);
-    -----------------------------------------------------------------------------------------------------------------
     controller: clkController port map (fpgaClk => fpgaClk, rst => '1', counterClk => counterClk, clk0 => clk0, clk1 => clk1);
-   
+
+    bitsinversor: invertsInput port map (q0 => pisoin, q1 => invertedInput);
+       
     --counter: counter256 port map (clk => , firstDigit => counterDig1, secondDigit => counterDig2); -- ok. 
     
     --memory: memox port map (clock => ,address => counterDig1 & counterDig2, q => memoryOutput); 
