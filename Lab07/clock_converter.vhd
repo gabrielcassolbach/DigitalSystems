@@ -5,7 +5,6 @@ use IEEE.numeric_std.ALL;
 entity clock_converter is
 	port ( clk: in std_logic; -- Pin connected to P11 (N14)
 			slowClk: out std_logic);-- Can check it using PIN A8 - LEDR0
-
 	end clock_converter;
   
 architecture freq_div of clock_converter is
@@ -19,7 +18,7 @@ process(clk)
 	begin
 	if(clk'event and clk='1') then
 		count <=count+1;
-		if (count = 50000000/1) then
+		if (count = 50000000/100) then
 			tmp <= NOT tmp;
 			count <= 1;
 		end if;

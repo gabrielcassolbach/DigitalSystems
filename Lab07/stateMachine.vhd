@@ -108,7 +108,7 @@ signal v: std_logic_vector (3 downto 0);
     begin
         if (rst <= '0') then
             clkCtrler <= s0;
-        elsif (clk'event and clk = '1') then 
+        elsif (clk'event and clk = '0') then 
             case clkCtrler is 
                 when s0 => 
                     clkCtrler <= s1;
