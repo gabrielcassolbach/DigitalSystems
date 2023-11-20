@@ -34,8 +34,8 @@ end COMPONENT;
 
 	begin 
 		B_OUT(0) <= SW4 xor SW_B(0);
-		B_OUT(1) <= SW4 xor SW_B(1);
-		B_OUT(2) <= SW4 xor SW_B(2);
+		B_OUT(1) <= SW4 xor SW_B(1); 
+		B_OUT(2) <= SW4 xor SW_B(2); 
 		B_OUT(3) <= SW4 xor SW_B(3);
 		--label: component_name  PORT_MAP  (port  list);
 		conversorA: CONVERSOR7SEG port map (X => SW_A, SEG => HEX0);

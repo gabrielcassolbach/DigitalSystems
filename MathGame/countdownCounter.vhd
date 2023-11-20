@@ -1,16 +1,16 @@
 Library IEEE;
 use ieee.std_logic_1164.all;
 
-entity countdown_counter is
+entity countdownCounter is
     port (
         clk: in std_logic;
         rstCounter: in std_logic;
         digit1: out std_logic_vector (3 downto 0);
         digit2: out std_logic_vector (3 downto 0)
     );
-end countdown_counter;
+end countdownCounter;
 
-architecture struct of countdown_counter is 
+architecture struct of countdownCounter is 
 
 --signals
 signal machine1to2Clk: std_logic;
