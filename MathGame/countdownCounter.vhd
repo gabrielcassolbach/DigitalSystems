@@ -30,7 +30,7 @@ port (  clk: in std_logic;
         outDigits: out std_logic_vector (3 downto 0));
 end component;
 
-    begin
+    begin 
     counter1: stateMachine1 port map (clk => clk, rst => rstCounter, outDigits => digit1, outClk => machine1to2Clk);
     counter2: stateMachine2 port map (clk => machine1to2Clk, rst => rstCounter, outDigits => digit2);
     end struct;

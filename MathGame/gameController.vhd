@@ -18,6 +18,7 @@ signal result: std_logic := '0'; --- result is true or false (1 or 0).
 signal operationResult: std_logic_vector (4 downto 0);
 signal sumOutput: std_logic_vector (4 downto 0);
 signal subtractionOutput: std_logic_vector (4 downto 0);
+signal auxV: std_logic_vector (3 downto 0);
 
 --component 
 component fourBitsAdder is
@@ -28,9 +29,13 @@ port (  a: in std_logic_vector (3 downto 0);
 end component;
 
     begin
+    auxV(0) <= '1' xor v2(0);
+    auxV(1) <= '1' xor v2(1);
+    auxV(2) <= '1' xor v2(2);
+    auxV(3) <= '1' xor v2(3);
 
     adder: fourBitsAdder port map (a => v1, b => v2, c_in => '0', s => sumOutput);
-    subtractor: fourBitsAdder port map (a => v1, b =>  v2 xor "1111", c_in => '1', s => subtractionOutput);
+    subtractor: fourBitsAdder port map (a => v1, b => auxV, c_in => '1', s => subtractionOutput);
     
     process (operation)
     begin
@@ -44,12 +49,12 @@ end component;
             when "0011" =>  -- 3 sum.
                 operationResult <= sumOutput;
             when "0100" =>  -- 4 subtraction. 
-                operationResult <= subtractionOutput;
+                operationResult <= (subtractionOutput(4) and not '1') & subtractionOutput (3 downto 0);
             when others => 
                 operationResult <= "00000";
             end case;
     end process;
-    
+    --(SOMA_A(4) and not SW4)
     result <= '1' when (operationResult = sw_keys) else '0';
     playResult <= result;
 
