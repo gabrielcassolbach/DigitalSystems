@@ -90,15 +90,17 @@ end component;
     -------------------------------------------------------------------------------------------------------------------------------------------
     -- Project Engine
     -----------------
-    decisionUnit: gameController port map (sw_keys => sw_keys, v1 => auxv1, v2 => auxv2, operation => auxop, playResult => ulaOutput);
+    decisionUnit: gameController port map (sw_keys => sw_keys, v1 => auxv1, v2 => auxv2, operation => auxop, playResult => ulaOutput); 
 
-    timeClk: clockConverter1 port map (clk => fpgaClk, clk1Hz => clk1hz);
+    timeClk: clockConverter1 port map (clk => fpgaClk, clk1Hz => clk1hz); -- clock de 1Hz.
 
-    value1Clk: clockConverter2 port map (clk => fpgaClk, fastClk1 => fastClk1);
+    value1Clk: clockConverter2 port map (clk => fpgaClk, fastClk1 => fastClk1); -- clock de 90Hz.
 
-    opClk: clockConverter3 port map (clk => fpgaClk, fastClk2 => fastClk2);
+    opClk: clockConverter3 port map (clk => fpgaClk, fastClk2 => fastClk2); -- clock de 45Hz.
 
-    value2Clk: clockConverter4 port map (clk => fpgaClk, fastClk3 => fastClk3);
+    value2Clk: clockConverter4 port map (clk => fpgaClk, fastClk3 => fastClk3); -- clock de 135 Hz.
+
+    rstScore <= '0' when ((dig1Time = "0000" and dig2Time = "0000") and clk1hz = '1') else '1'; 
     -------------------------------------------------------------------------------------------------------------------------------------------
     -- Project Units
     ----------------
@@ -111,8 +113,6 @@ end component;
     value2: counter09 port map (clk => fastClk3 and (not pb0), rstCounter => '1', outDigits => auxv2);
         
     score: playerScore port map (clk => pb0, enableClk => ulaOutput, rstCounter => rstScore, outDigits => auxscr);
-
-    rstScore <= '0' when ((dig1Time = "0000" and dig2Time = "0000") and clk1hz = '1') else '1'; 
     -------------------------------------------------------------------------------------------------------------------------------------------
     -- Project Output
     -----------------

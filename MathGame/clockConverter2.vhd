@@ -3,8 +3,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.ALL;
 
 entity clockConverter2 is
-port ( clk: in std_logic; -- Pin connected to P11 (N14)
-	   fastClk1: out std_logic);-- Can check it using PIN A8 - LEDR0
+port ( clk: in std_logic;
+	   fastClk1: out std_logic
+	 );
 end clockConverter2;
   
 architecture freq_div of clockConverter2 is

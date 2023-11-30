@@ -1,8 +1,6 @@
 Library IEEE;
 use ieee.std_logic_1164.all;
 
--- the gameController entity works as a ULA (arithmetic and logic unit).
-
 entity gameController is
     port (
         sw_keys: in std_logic_vector (4 downto 0);
@@ -54,7 +52,7 @@ end component;
                 operationResult <= "00000";
             end case;
     end process;
-    --(SOMA_A(4) and not SW4)
+
     result <= '1' when (operationResult = sw_keys) else '0';
     playResult <= result;
 
